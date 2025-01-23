@@ -3,6 +3,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from typing import Optional, List, Tuple
 from transformers import AutoTokenizer
 from sentence_transformers import SentenceTransformer
+from langchain.docstore.document import Document as LangchainDocument
 
 sys.path.append('/content/Pipeline_RAG')
 from variables import EMBEDDING_MODEL_NAME
