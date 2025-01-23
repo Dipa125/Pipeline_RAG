@@ -1,9 +1,14 @@
 pymupdf
 paddleocr
 paddlepaddle
+
 pillow
 
+transformers
 sentence-transformers
+
 langchain
 langchain-huggingface
-transformers
+langchain-community
+
+faiss-cpu
