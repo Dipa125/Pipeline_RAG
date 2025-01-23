@@ -1,5 +1,8 @@
-# Nome del modello usato per il Tokenizer
+# Nome del modello usato per l'Embedding
 EMBEDDING_MODEL_NAME = "dbmdz/bert-base-italian-xxl-cased"
+
+# Nome del modello usato per il Tokenizer
+TOKENIZER_MODEL_NAME = "dbmdz/bert-base-italian-xxl-cased"
 
 # marcatori consigliati da LangChain per dividere il testo in chunk
 MARKDOWN_SEPARATORS = [
