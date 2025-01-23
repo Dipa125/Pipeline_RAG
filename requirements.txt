@@ -2,3 +2,8 @@ pymupdf
 paddleocr
 paddlepaddle
 pillow
+
+sentence-transformers
+langchain
+langchain-huggingface
+transformers
