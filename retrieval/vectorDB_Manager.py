@@ -22,6 +22,7 @@ class VectorDB_Manager:
       distance_strategy=DistanceStrategy.COSINE
       )
 
+# Si può rendere parametrico anche la scelta della similarità e il numero di documenti estratti
   def retrieval(self):
     return self.vectorDB.as_retriever(search_type="similarity", search_kwargs={"k": 4})
 

@@ -11,8 +11,8 @@ import numpy as np
 
 class Recognition:
 
-  def __init__(self, lang):
-    self.paddleOCR = PaddleOCR(use_angle_cls=True, lang=lang)
+  def __init__(self):
+    self.paddleOCR = PaddleOCR(use_angle_cls=True, lang="it")
 
 #-Concatena il testo rilevato in ogni pagina del PDF
   def __pdf2text(self, reader):
