@@ -2,8 +2,6 @@ from langchain.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores.utils import DistanceStrategy
 
-import sys
-sys.path.append('/content/Pipeline_RAG')
 from variables import EMBEDDING_MODEL_NAME_L6
 
 class VectorDB_Manager:

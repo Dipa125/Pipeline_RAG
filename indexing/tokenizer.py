@@ -3,9 +3,6 @@ from transformers import AutoTokenizer
 from langchain.docstore.document import Document as LangchainDocument
 from sentence_transformers import SentenceTransformer
 
-import sys
-sys.path.append('/content/Pipeline_RAG')
-
 from variables import EMBEDDING_MODEL_NAME_L6
 from variables import MARKDOWN_SEPARATORS
 

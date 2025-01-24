@@ -1,7 +1,3 @@
-"""
-Questa classe si occupa del recupero dei file da una cartella e di convertirli in testo.
-"""
-
 import os
 import fitz
 from paddleocr import PaddleOCR
