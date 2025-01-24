@@ -22,7 +22,7 @@ class LLM:
     self.model = AutoModelForCausalLM.from_pretrained(MODEL_NAME_BF16, quantization_config=bnb_config)
     self.tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME_BF16)
   
-  def __prompt():
+  def _prompt():
     return PromptTemplate(
       input_variables=["context", "question"],
       template=PROMT_TEMPLATE,
@@ -40,7 +40,7 @@ class LLM:
       max_new_tokens=400,
       )
     llm = HuggingFacePipeline(pipeline=text_generation_pipeline)
-    return self.__promt() | llm | StrOutputParser()
+    return self._prompt() | llm | StrOutputParser()
 
 
 
