@@ -13,3 +13,4 @@ langchain-community
 
 faiss-cpu
 torch
+bitsandbytes

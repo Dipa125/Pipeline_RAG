@@ -8,9 +8,8 @@ sys.path.append('/content/Pipeline_RAG')
 from variables import EMBEDDING_MODEL_NAME_L6
 
 class Embedder:
-
   def __init__(self):
-      self.embedding_model = HuggingFaceEmbeddings(
+    self.embedding_model = HuggingFaceEmbeddings(
       model_name=EMBEDDING_MODEL_NAME_L6,
       multi_process=True,
       model_kwargs={"device": "cuda"},
@@ -20,4 +19,4 @@ class Embedder:
   def create_vectorDB(self, docs):
     return FAISS.from_documents(
       docs, self.embedding_model, distance_strategy=DistanceStrategy.COSINE
-    )
+      )
