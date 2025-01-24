@@ -26,7 +26,7 @@ class Tokenizer:
   
   def split_documents(self, docs):
     RAW_KNOWLEDGE_BASE = [
-      LangchainDocument(page_content=docs[doc], metadata={}) for doc in docs
+      LangchainDocument(page_content=docs[doc], metadata={"name":doc}) for doc in docs
     ]
     docs_processed = []
     for doc in RAW_KNOWLEDGE_BASE:
