@@ -41,7 +41,7 @@ def create_chains(pathDoc=None):
   retrieval = vectorDB.retrieval()
 
   # Import del modello e tokenizzatore per LLM
-  model, tokenizer, prompt = LoadModel(quantize=False)
+  model, tokenizer, prompt = LoadModel(quantize=True)
 
   # Creazione della catena per LLM
   llm_chain = LLM(model, tokenizer, prompt)

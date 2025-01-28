@@ -1,6 +1,6 @@
 from transformers import pipeline
 
-from langchain_community.llms import HuggingFacePipeline
+from langchain_huggingface import HuggingFacePipeline
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
@@ -23,7 +23,8 @@ class LLM:
         do_sample=True,
         repetition_penalty=1.1,
         return_full_text=True,
-        max_new_tokens=400,
+        max_new_tokens=300,
+        pad_token_id=tokenizer.eos_token_id
     )
     
     llm = HuggingFacePipeline(pipeline=text_generation_pipeline)
