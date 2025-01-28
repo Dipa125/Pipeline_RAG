@@ -25,6 +25,19 @@ MARKDOWN_SEPARATORS = [
     " ",
     "",
 ]
+
+PROMT_TEMPLATE_GPT = """
+Rispondi alla domanda basandoti sulla tua conoscenza e sul seguente contesto.
+
+Contesto:
+{context}
+
+Domanda:
+{question}
+
+Risposta:
+"""
+
 PROMT_TEMPLATE_SHORT = """
 Tu sei Modello Italia, un modello di linguaggio naturale addestrato da iGenius.
 Rispondi alla domanda basandoti sulla tua conoscenza e sul seguente contesto:

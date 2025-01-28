@@ -9,12 +9,13 @@ from variables import PROMT_TEMPLATE
 # Gestione diversa per la costruzione del prompt?
 class LLM:
   def __new__(cls, model, tokenizer, prompt):
+
     # Creazione del prompt da adattare al modello di sapienza
     prompt = PromptTemplate(
         input_variables=["context", "question"],
         template=prompt,
     )
-    
+    """
     text_generation_pipeline = pipeline(
         model=model,
         tokenizer=tokenizer,
@@ -28,7 +29,8 @@ class LLM:
     )
     
     llm = HuggingFacePipeline(pipeline=text_generation_pipeline)
-    
+    """
+    llm = model
     return prompt | llm | StrOutputParser()   
 
 

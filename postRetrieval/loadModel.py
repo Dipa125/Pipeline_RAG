@@ -3,11 +3,14 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
 from variables import MODEL_NAME_BF16
 from variables import PROMT_TEMPLATE_SHORT
+from variables import PROMT_TEMPLATE_GPT
+
+from langchain_openai import ChatOpenAI
 
 class LoadModel():
 
   def __new__(cls, quantize=True):
-    
+
     # Funzione per la creazione del prompt che si adatta al modello di Sapienza?
     def _prompt_model(tokenizer):
       messages = [
@@ -19,7 +22,7 @@ class LoadModel():
       )
       return "".join(tokenized_prompt)
 
-
+"""
     if quantize:
       bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
@@ -33,10 +36,11 @@ class LoadModel():
         )
     else:
       model = AutoModelForCausalLM.from_pretrained(MODEL_NAME_BF16)
-
+"""
+    model = ChatOpenAI(model="gpt-3.5-turbo", openai_api_key=api_key)
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME_BF16)
-    prompt = _prompt_model(tokenizer)
-
+    #prompt = _prompt_model(tokenizer)
+    prompt = PROMT_TEMPLATE_GPT
     return model, tokenizer, prompt
 
 
