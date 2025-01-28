@@ -6,8 +6,6 @@ from sentence_transformers import SentenceTransformer
 from variables import EMBEDDING_MODEL_NAME_L6
 from variables import MARKDOWN_SEPARATORS
 
-
-
 class Tokenizer:
 
   def __init__(self):

@@ -4,15 +4,15 @@ from langchain_community.llms import HuggingFacePipeline
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-import sys
-sys.path.append('/content/Pipeline_RAG')
 from variables import PROMT_TEMPLATE
 
+# Gestione diversa per la costruzione del prompt?
 class LLM:
-  def __new__(cls, model, tokenizer):
+  def __new__(cls, model, tokenizer, prompt):
+    # Creazione del prompt da adattare al modello di sapienza
     prompt = PromptTemplate(
         input_variables=["context", "question"],
-        template=PROMT_TEMPLATE,
+        template=prompt,
     )
     
     text_generation_pipeline = pipeline(

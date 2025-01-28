@@ -2,12 +2,12 @@ import sys
 import subprocess
 import argparse
 
-from variables import PROGECT_PATH, REQUIREMENTS_PATH
+from variables import PROJECT_PATH, REQUIREMENTS_PATH
 
 def setup_environment():
   subprocess.run(["pip", "install", "-q", "-r", REQUIREMENTS_PATH], check=True)
-  if PROGECT_PATH not in sys.path:
-      sys.path.append(PROGECT_PATH)
+  if PROJECT_PATH not in sys.path:
+      sys.path.append(PROJECT_PATH)
 
 def import_class():
   global Recognition, Tokenizer, VectorDB_Manager, LoadModel, LLM, RAG
@@ -41,10 +41,10 @@ def create_chains(pathDoc=None):
   retrieval = vectorDB.retrieval()
 
   # Import del modello e tokenizzatore per LLM
-  model, tokenizer = LoadModel(quantize=False)
+  model, tokenizer, prompt = LoadModel(quantize=False)
 
   # Creazione della catena per LLM
-  llm_chain = LLM(model, tokenizer)
+  llm_chain = LLM(model, tokenizer, prompt)
 
   # Creazione della catena completa per la Pipeline RAG
   rag_chain = RAG(retrieval, llm_chain)

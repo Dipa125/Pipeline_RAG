@@ -1,5 +1,5 @@
 # Path dell'intero progetto
-PROGECT_PATH = "/content/Pipeline_RAG"
+PROJECT_PATH = "/content/Pipeline_RAG"
 
 # File contenente tutte le dipendenze
 REQUIREMENTS_PATH = "/content/Pipeline_RAG/requirements.txt"
@@ -25,7 +25,11 @@ MARKDOWN_SEPARATORS = [
     " ",
     "",
 ]
-
+PROMT_TEMPLATE_SHORT = """
+Tu sei Modello Italia, un modello di linguaggio naturale addestrato da iGenius.
+Rispondi alla domanda basandoti sulla tua conoscenza e sul seguente contesto:
+{context}
+"""
 # Definizione del template per il prompt (DA RIVEDERE)
 PROMT_TEMPLATE ="""
 <|system|>
