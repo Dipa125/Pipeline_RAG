@@ -31,7 +31,7 @@ def create_chains(pathDoc=None):
   tokenizer = Tokenizer()
 
   # Processamento dei file all'interno di una cartella
-  docs = recognition.extractText(args.pathDoc)
+  docs = recognition.extractText(pathDoc)
   docs_processed = tokenizer.split_documents(docs)
 
   # Istanziamento della classe che gestisce il VectorDB
