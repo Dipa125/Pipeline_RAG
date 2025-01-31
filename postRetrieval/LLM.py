@@ -28,7 +28,7 @@ class LLM:
       
     prompt = PromptTemplate(
       input_variables=["context", "question"],
-      template = PROMT_TEMPLATE_ENG,
+      template = PROMT_TEMPLATE_ITA,
       )   
     
     return prompt | llm | StrOutputParser()

@@ -43,8 +43,8 @@ def create_chains(pathDoc=None):
   retrieval = vectorDB.retrieval()
 
   # Carica la chiave API
-  load_dotenv()
-  api_key = os.getenv("OPENAI_API_KEY")
+  load_dotenv("/content/Pipeline_RAG/.env")
+  api_key = os.getenv("GPT_API_KEY")
 
   # Import del modello e tokenizzatore per LLM
   model, tokenizer = LoadModel(api_key, quantize=False)
