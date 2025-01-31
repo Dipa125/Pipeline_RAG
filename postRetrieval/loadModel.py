@@ -8,7 +8,7 @@ from variables import MODEL_NAME_GOOGLE
 
 class LoadModel():
 
-  def __new__(cls, api_key=None , quantize=True):
+  def __new__(cls, api_key=None, quantize=True):
     if api_key is not None:
       model = ChatOpenAI(model="gpt-3.5-turbo", openai_api_key=api_key)
       return model, None
