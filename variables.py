@@ -25,7 +25,8 @@ MARKDOWN_SEPARATORS = [
     "",
 ]
 
-PROMT_TEMPLATE_GPT = """
+# Definizione del template per il prompt italiano
+PROMT_TEMPLATE_ITA = """
 Rispondi alla domanda basandoti sulla tua conoscenza e sul seguente contesto.
 
 Contesto:
@@ -37,12 +38,15 @@ Domanda:
 Risposta:
 """
 
-# Definizione del template per il prompt (DA RIVEDERE)
-PROMT_TEMPLATE ="""
-<|system|>
-Rispondi alla domanda basandoti sulla tua conoscenza. Aiutati con il seguente contesto:
-{context}</s>
-<|user|>
-{question}</s>
-<|assistant|>
- """
+# Definizione del template per il prompt inglese
+PROMT_TEMPLATE_ENG ="""
+Answer the question based on your knowledge and the following context.
+
+Context:
+{context}
+
+Question:
+{question}
+
+Answer:
+"""

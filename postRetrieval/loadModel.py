@@ -1,6 +1,5 @@
 import torch
-from transformers import AutoTokenizer
-from transformers import AutoModelForSeq2SeqLM, AutoModelForCausalLM 
+from transformers import AutoTokenizer, AutoModelForCausalLM 
 from transformers import BitsAndBytesConfig
 from langchain_openai import ChatOpenAI
 
@@ -16,12 +15,12 @@ class LoadModel():
     else:
       if quantize:
         bnb_config = cls._quantize_4bit()
-        model = AutoModelForSeq2SeqLM.from_pretrained(
+        model = AutoModelForCausalLM.from_pretrained(
           MODEL_NAME_FACEBOOK,
           quantization_config=bnb_config
           )
       else:
-        model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME_FACEBOOK)
+        model = AutoModelForCausalLM.from_pretrained(MODEL_NAME_FACEBOOK)
         
       tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME_FACEBOOK)
       return model, tokenizer

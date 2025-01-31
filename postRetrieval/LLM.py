@@ -4,8 +4,8 @@ from langchain.prompts import PromptTemplate
 from langchain_huggingface import HuggingFacePipeline
 from langchain_core.output_parsers import StrOutputParser
 
-from variables import PROMT_TEMPLATE
-from variables import PROMT_TEMPLATE_GPT
+from variables import PROMT_TEMPLATE_ITA
+from variables import PROMT_TEMPLATE_ENG
 
 # Gestione diversa per la costruzione del prompt?
 class LLM:
@@ -16,7 +16,7 @@ class LLM:
       text_generation_pipeline = pipeline(
         model=model,
         tokenizer=tokenizer,
-        task="text2text-generation",
+        task="text-generation",
         temperature=0.2,
         do_sample=True,
         repetition_penalty=1.1,
@@ -28,7 +28,7 @@ class LLM:
       
     prompt = PromptTemplate(
       input_variables=["context", "question"],
-      template = PROMT_TEMPLATE_GPT if tokenizer is None else PROMT_TEMPLATE,
+      template = PROMT_TEMPLATE_ENG,
       )   
     
     return prompt | llm | StrOutputParser()
