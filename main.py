@@ -1,6 +1,8 @@
 import sys
 import subprocess
 import argparse
+import os
+from dotenv import load_dotenv
 
 from variables import PROJECT_PATH, REQUIREMENTS_PATH
 
@@ -40,11 +42,15 @@ def create_chains(pathDoc=None):
   # Creazione del retrieval associandolo al Vector DB
   retrieval = vectorDB.retrieval()
 
+  # Carica la chiave API
+  load_dotenv()
+  api_key = os.getenv("OPENAI_API_KEY")
+
   # Import del modello e tokenizzatore per LLM
-  model, tokenizer, prompt = LoadModel(quantize=True)
+  model, tokenizer = LoadModel(api_key, quantize=False)
 
   # Creazione della catena per LLM
-  llm_chain = LLM(model, tokenizer, prompt)
+  llm_chain = LLM(model, tokenizer)
 
   # Creazione della catena completa per la Pipeline RAG
   rag_chain = RAG(retrieval, llm_chain)

@@ -8,8 +8,14 @@ from variables import PROMT_TEMPLATE
 
 # Gestione diversa per la costruzione del prompt?
 class LLM:
-  def __new__(cls, model, tokenizer, prompt):
-
+  def __new__(cls, model, tokenizer=None):
+    if tokenizer is None:
+      # Stai usando GPT, non serve tokenizer e prompt
+      print("")
+    else:
+      # Stai usando altri modelli di HuggingFace, usa tokenizer e prompt
+      print("")
+    
     # Creazione del prompt da adattare al modello di sapienza
     prompt = PromptTemplate(
         input_variables=["context", "question"],

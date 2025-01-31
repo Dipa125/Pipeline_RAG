@@ -17,3 +17,5 @@ bitsandbytes
 
 openai
 langchain-openai
+
+python-dotenv
