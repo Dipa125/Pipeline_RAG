@@ -16,7 +16,7 @@ class LLM:
       text_generation_pipeline = pipeline(
         model=model,
         tokenizer=tokenizer,
-        task="text-generation",
+        task="text2text-generation",
         temperature=0.2,
         do_sample=True,
         repetition_penalty=1.1,

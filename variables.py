@@ -10,7 +10,6 @@ EMBEDDING_MODEL_NAME_L12 = "sentence-transformers/paraphrase-multilingual-MiniLM
 
 
 # Nome del modello usato per l'LLM
-MODEL_NAME_GOOGLE = "google/flan-t5-small"
 MODEL_NAME_FACEBOOK = "facebook/opt-1.3b"
 
 # Marcatori consigliati da LangChain per dividere il testo in chunk

@@ -4,7 +4,7 @@ from transformers import AutoModelForSeq2SeqLM, AutoModelForCausalLM
 from transformers import BitsAndBytesConfig
 from langchain_openai import ChatOpenAI
 
-from variables import MODEL_NAME_GOOGLE
+from variables import MODEL_NAME_FACEBOOK
 
 class LoadModel():
 
@@ -17,12 +17,13 @@ class LoadModel():
       if quantize:
         bnb_config = cls._quantize_4bit()
         model = AutoModelForSeq2SeqLM.from_pretrained(
-          MODEL_NAME_GOOGLE,
+          MODEL_NAME_FACEBOOK,
           quantization_config=bnb_config
           )
       else:
-        model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME_GOOGLE)
-      tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME_GOOGLE)
+        model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME_FACEBOOK)
+        
+      tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME_FACEBOOK)
       return model, tokenizer
 
   def _quantize_4bit():

@@ -2,7 +2,6 @@ import sys
 import subprocess
 import argparse
 import os
-from dotenv import load_dotenv
 
 from variables import PROJECT_PATH, REQUIREMENTS_PATH
 
@@ -12,7 +11,8 @@ def setup_environment():
       sys.path.append(PROJECT_PATH)
 
 def import_class():
-  global Recognition, Tokenizer, VectorDB_Manager, LoadModel, LLM, RAG
+  global load_dotenv, Recognition, Tokenizer, VectorDB_Manager, LoadModel, LLM, RAG
+  from dotenv import load_dotenv
   from indexing.recognition import Recognition
   from indexing.tokenizer import Tokenizer
   from retrieval.vectorDB_Manager import VectorDB_Manager
