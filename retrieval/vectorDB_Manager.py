@@ -8,7 +8,7 @@ from variables import EMBEDDING_MODEL_NAME_L6
 
 class VectorDB_Manager:
 
-  def __init__(self, docs, load_path=None):
+  def __init__(self, docs=None, load_path=None):
     self.embedding_model = HuggingFaceEmbeddings(
       model_name=EMBEDDING_MODEL_NAME_L6,
       multi_process=True,
@@ -16,14 +16,16 @@ class VectorDB_Manager:
       encode_kwargs={"normalize_embeddings": True},
       )
 
-    if load_path is None:
+    if load_path:
+      self.vectorDB = self._load_vectorDB(load_path)
+    elif docs:
       self.vectorDB = FAISS.from_documents(
         docs,
         self.embedding_model,
         distance_strategy=DistanceStrategy.COSINE
         )
     else:
-      self.vectorDB = self._load_vectorDB(load_path)
+      raise ValueError("path or document needed for initialization")
 
 # Si può rendere parametrico anche la scelta della similarità e il numero di documenti estratti
   def retrieval(self):
@@ -41,12 +43,17 @@ class VectorDB_Manager:
 
   def save_vectorDB(self, save_path):
     if self.vectorDB:
-      os.makedirs(os.path.dirname(save_path), exist_ok=True)
+      os.makedirs(save_path, exist_ok=True)
       self.vectorDB.save_local(save_path)
 
   def _load_vectorDB(self, load_path):
+    if not os.path.exists(os.path.join(load_path, "index.faiss")):
+        raise FileNotFoundError(f"'index.faiss' not found in {load_path}")
+    if not os.path.exists(os.path.join(load_path, "index.pkl")):
+        raise FileNotFoundError(f"'index.pkl' non trovato in {load_path}")
+
     if os.path.exists(load_path):
-      self.vectorDB = FAISS.load_local(load_path, self.embedding_model)
+      return FAISS.load_local(load_path, self.embedding_model, allow_dangerous_deserialization=True)
 
 
 
