@@ -1,4 +1,4 @@
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter, MarkdownTextSplitter
 from transformers import AutoTokenizer
 from langchain.docstore.document import Document as LangchainDocument
 from sentence_transformers import SentenceTransformer
@@ -10,12 +10,17 @@ class Tokenizer:
 
   def __init__(self):
     max_chunk = SentenceTransformer(EMBEDDING_MODEL_NAME_L6).max_seq_length
-    self.text_splitter = RecursiveCharacterTextSplitter(
+    # self.text_splitter = RecursiveCharacterTextSplitter(
+    #     chunk_size=max_chunk,
+    #     chunk_overlap=int(max_chunk / 10),
+    #     # add_start_index=True,
+    #     strip_whitespace=True,
+    #     separators=MARKDOWN_SEPARATORS,
+    # )
+    self.text_splitter = MarkdownTextSplitter(
         chunk_size=max_chunk,
         chunk_overlap=int(max_chunk / 10),
-        add_start_index=True,
-        strip_whitespace=True,
-        separators=MARKDOWN_SEPARATORS,
+        # add_start_index=True,
     )
   
   def split_documents(self, docs):

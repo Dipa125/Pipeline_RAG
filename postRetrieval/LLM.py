@@ -13,7 +13,7 @@ from variables import PROMT_TEMPLATE_ENG
 # Gestione diversa per la costruzione del prompt?
 # Gestiore parametri diversi per LLM
 class LLM:
-  def __new__(cls, model_name, is_local=False, quantize = False, key_HF=None, key_GPT=None, lang="en"):
+  def __new__(cls, model_name, is_local = True, quantize = False, key_HF = None, key_GPT = None, lang = "en"):
     if not is_local and (key_HF is None and key_GPT is None):
         raise ValueError("To use a remote model, you must provide a valid key.")
     

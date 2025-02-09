@@ -12,7 +12,7 @@ EMBEDDING_MODEL_NAME_L12 = "sentence-transformers/paraphrase-multilingual-MiniLM
 CAPTIONING_MODEL = "Salesforce/blip-image-captioning-base"
 
 # Nome del modello usato per l'LLM
-MODEL_NAME_FACEBOOK = "facebook/opt-1.3b"
+LLM_NAME = "mistralai/Mistral-7B-Instruct-v0.3"
 
 # Marcatori consigliati da LangChain per dividere il testo in chunk
 MARKDOWN_SEPARATORS = [
