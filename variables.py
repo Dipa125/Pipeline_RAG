@@ -8,6 +8,8 @@ REQUIREMENTS_PATH = "/content/Pipeline_RAG/requirements.txt"
 EMBEDDING_MODEL_NAME_L6 = "sentence-transformers/all-MiniLM-L6-v2"
 EMBEDDING_MODEL_NAME_L12 = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
+# Nome del modello per l'image captioning
+CAPTIONING_MODEL = "Salesforce/blip-image-captioning-base"
 
 # Nome del modello usato per l'LLM
 MODEL_NAME_FACEBOOK = "facebook/opt-1.3b"
