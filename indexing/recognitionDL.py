@@ -33,7 +33,7 @@ class ImageCaptioningFromBase64:
 
   def replace_base64_images_with_captions(self, markdown_text, pattern_base64):
     
-    def replace_match(self, match):
+    def replace_match(match):
         base64_string = match.group(1)
         image = self._base64_to_image(base64_string)
         caption = self._image_to_caption(image)
