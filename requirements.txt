@@ -10,6 +10,7 @@ sentence-transformers
 langchain
 langchain-huggingface
 langchain-community
+langchain-text-splitters
 
 faiss-cpu
 torch
@@ -19,3 +20,6 @@ openai
 langchain-openai
 
 python-dotenv
+
+docling 
+docling-core
