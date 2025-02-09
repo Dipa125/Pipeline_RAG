@@ -10,8 +10,7 @@ class Tokenizer:
 
   def __init__(self):
     max_chunk = SentenceTransformer(EMBEDDING_MODEL_NAME_L6).max_seq_length
-    self.text_splitter = RecursiveCharacterTextSplitter.from_huggingface_tokenizer(
-        AutoTokenizer.from_pretrained(EMBEDDING_MODEL_NAME_L6),
+    self.text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=max_chunk,
         chunk_overlap=int(max_chunk / 10),
         add_start_index=True,

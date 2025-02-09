@@ -1,3 +1,4 @@
+import os
 import re
 import base64
 from io import BytesIO
@@ -15,7 +16,7 @@ from docling.datamodel.base_models import InputFormat
 
 from variables import CAPTIONING_MODEL
 
-class ImageCaptioning:
+class ImageCaptioningFromBase64:
   def __init__(self) -> None:
       self.processor = BlipProcessor.from_pretrained(CAPTIONING_MODEL)
       self.model = BlipForConditionalGeneration.from_pretrained(CAPTIONING_MODEL)
@@ -31,8 +32,7 @@ class ImageCaptioning:
     return caption
 
   def replace_base64_images_with_captions(self, markdown_text, pattern_base64):
-    #pattern = r'!\[Image\]\((data:image/png;base64,[^\)]+)\)'
-
+    
     def replace_match(self, match):
         base64_string = match.group(1)
         image = self._base64_to_image(base64_string)
@@ -45,28 +45,36 @@ class ImageCaptioning:
 
 
 class DoclingPDFLoader(BaseLoader):
-    def __init__(self, path: str | list[str])-> None:
-        self.file_paths = path if isinstance(path, list) else [path]
-        self.converter = DocumentConverter(
-            format_options={
-              InputFormat.PDF: PdfFormatOption(pipeline_options=PdfPipelineOptions(
-                  generate_picture_images=True,
-                  )
-              )
-            }
+  def __init__(self, path: str | list[str], do_captioning = False):
+    self.do_captioning = do_captioning
+    self.file_paths = path if isinstance(path, list) else [path]
+    self.converter = DocumentConverter(
+      format_options={
+        InputFormat.PDF: PdfFormatOption(
+          pipeline_options=PdfPipelineOptions(
+            generate_picture_images = do_captioning,
+          )
         )
+      }
+    )
 
-    def load(self): # -> Iterator[LangchainDocument]
-        docs={}
-        for source in self.file_paths:
-          file_name = os.path.splitext(os.path.basename(source))[0]
-          docling_doc = self.converter.convert(source).document
-          text = docling_doc.export_to_markdown(image_mode=ImageRefMode.EMBEDDED)
-          updated_text = replace_base64_images_with_captions(text)
-          docs[file_name] = updated_text
-          #docs.append(LangchainDocument(page_content=updated_text, metadata={"name":file_name}))
-          # yield LangchainDocument(page_content=updated_text)
-        return docs
+  def load(self): # -> Iterator[LangchainDocument]
+    docs={}
+    for source in self.file_paths:
+      file_name = os.path.splitext(os.path.basename(source))[0]
+      docling_doc = self.converter.convert(source).document
+
+      text = docling_doc.export_to_markdown(
+        image_mode = ImageRefMode.EMBEDDED if self.do_captioning else ImageRefMode.PLACEHOLDER
+      )
+      if self.do_captioning:
+        captioning = ImageCaptioningFromBase64()
+        pattern_image = r'!\[Image\]\((data:image/png;base64,[^\)]+)\)'
+        text = captioning.replace_base64_images_with_captions(text, pattern_image)
+      docs[file_name] = text
+      # docs.append(LangchainDocument(page_content=updated_text, metadata={"name":file_name}))
+      # yield LangchainDocument(page_content=updated_text)
+    return docs
 
 
 
