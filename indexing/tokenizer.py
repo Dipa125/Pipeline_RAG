@@ -1,3 +1,4 @@
+from typing import List
 from langchain.text_splitter import RecursiveCharacterTextSplitter, MarkdownTextSplitter
 from transformers import AutoTokenizer
 from langchain.docstore.document import Document as LangchainDocument
@@ -23,14 +24,10 @@ class Tokenizer:
         # add_start_index=True,
     )
   
-  def split_documents(self, docs):
-    RAW_KNOWLEDGE_BASE = [
-      LangchainDocument(page_content=docs[doc], metadata={"name":doc}) for doc in docs
-    ]
+  def split_documents(self, langchain_docs: List[LangchainDocument]):
     docs_processed = []
-    for doc in RAW_KNOWLEDGE_BASE:
+    for doc in langchain_docs:
         docs_processed += self.text_splitter.split_documents([doc])
-
     return docs_processed
 
 
