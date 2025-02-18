@@ -4,9 +4,10 @@ PROJECT_PATH = "/content/Pipeline_RAG"
 # File contenente tutte le dipendenze
 REQUIREMENTS_PATH = "/content/Pipeline_RAG/requirements.txt"
 
-# Nome del modello usato per l'Embedding e Tokenizzatore
-EMBEDDING_MODEL_NAME_L6 = "sentence-transformers/all-MiniLM-L6-v2"
-EMBEDDING_MODEL_NAME_L12 = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+# Nome del modello usato per l'Embedding
+EMBEDDING_MODEL_NAME_256 = "sentence-transformers/all-MiniLM-L6-v2"
+EMBEDDING_MODEL_NAME_384 = "sentence-transformers/all-mpnet-base-v2"
+EMBEDDING_MODEL_NAME_512 = "sentence-transformers/multi-qa-MiniLM-L6-cos-v1"
 
 # Nome del modello per l'image captioning
 CAPTIONING_MODEL = "Salesforce/blip-image-captioning-base"

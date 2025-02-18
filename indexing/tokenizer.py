@@ -4,29 +4,13 @@ from transformers import AutoTokenizer
 from langchain.docstore.document import Document as LangchainDocument
 from sentence_transformers import SentenceTransformer
 
-from variables import EMBEDDING_MODEL_NAME_L6
+from variables import EMBEDDING_MODEL_NAME_256, EMBEDDING_MODEL_NAME_384, EMBEDDING_MODEL_NAME_512
 from variables import MARKDOWN_SEPARATORS
 
 class Tokenizer:
 
   def __init__(self):
-    max_chunk = SentenceTransformer(EMBEDDING_MODEL_NAME_L6).max_seq_length
-    # self.markdown_splitter = RecursiveCharacterTextSplitter(
-    #     chunk_size=max_chunk*5,
-    #     chunk_overlap=int(max_chunk / 10),
-    #     # add_start_index=True,
-    #     strip_whitespace=True,
-    #     separators=MARKDOWN_SEPARATORS
-    # )
-
-    # self.text_splitter = MarkdownTextSplitter(
-    #     chunk_size=max_chunk,
-    #     chunk_overlap=int(max_chunk / 10),
-    #     # add_start_index=True,
-    # )
-
-    # self.markdown_splitter = MarkdownTextSplitter()
-
+    max_chunk = SentenceTransformer(EMBEDDING_MODEL_NAME_256).max_seq_length
     self.markdown_splitter = MarkdownHeaderTextSplitter(headers_to_split_on=MARKDOWN_SEPARATORS)
     
     self.token_splitter = TokenTextSplitter(
