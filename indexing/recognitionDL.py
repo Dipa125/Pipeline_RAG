@@ -52,12 +52,6 @@ class DoclingPDFLoader(BaseLoader):
       else:
         raise ValueError(f"Unsupported export format: {export_format}. Use ExportFormat.JSON or ExportFormat.MARKDOWN")
     # return self.docs # Potrebbe non serive più essendo diventata una variabile di istanza
-  
-  def langchainDocument_from_markdown(self)->List[LangchainDocument]:
-    langchain_docs_markdown = [
-      LangchainDocument(page_content=self.docs_markdown[doc], metadata={"name":doc}) for doc in self.docs_markdown
-    ]
-    return langchain_docs_markdown
 
   def langChainDocument_from_json(self) -> List[LangchainDocument]:
     print("La funzione non è ancora implementata.")
