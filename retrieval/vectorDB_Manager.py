@@ -4,13 +4,13 @@ from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores.utils import DistanceStrategy
 
-from variables import EMBEDDING_MODEL_NAME_L6
+from variables import EMBEDDING_MODEL_NAME_256, EMBEDDING_MODEL_NAME_384, EMBEDDING_MODEL_NAME_512
 
 class VectorDB_Manager:
 
   def __init__(self, docs=None, load_path=None):
     self.embedding_model = HuggingFaceEmbeddings(
-      model_name=EMBEDDING_MODEL_NAME_L6,
+      model_name=EMBEDDING_MODEL_NAME_256,
       multi_process=True,
       model_kwargs={"device": "cuda"},
       encode_kwargs={"normalize_embeddings": True},
