@@ -4,16 +4,16 @@ from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores.utils import DistanceStrategy
 
-from variables import EMBEDDING_MODEL_NAME_256, EMBEDDING_MODEL_NAME_384, EMBEDDING_MODEL_NAME_512
+from variables import Embedding_Model
 
 class VectorDB_Manager:
 
-  def __init__(self, docs=None, load_path=None):
+  def __init__(self, embedder:Embedding_Model, docs=None, load_path=None):
     self.embedding_model = HuggingFaceEmbeddings(
-      model_name=EMBEDDING_MODEL_NAME_256,
-      multi_process=True,
-      model_kwargs={"device": "cuda"},
-      encode_kwargs={"normalize_embeddings": True},
+      model_name = embedder.value,
+      multi_process = True,
+      model_kwargs = {"device": "cuda"},
+      encode_kwargs = {"normalize_embeddings": True},
       )
 
     if load_path:
@@ -27,7 +27,6 @@ class VectorDB_Manager:
     else:
       raise ValueError("path or document needed for initialization")
 
-# Si può rendere parametrico anche la scelta della similarità e il numero di documenti estratti
   def retrieval(self, results):
     return self.vectorDB.as_retriever(search_type="similarity", search_kwargs={"k": results})
 

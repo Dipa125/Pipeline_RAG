@@ -13,8 +13,8 @@ from docling.datamodel.base_models import InputFormat
 from indexing.imageCaptioning import ImageCaptioningFromBase64
 
 class ExportFormat(Enum):
-    JSON = "json"
-    MARKDOWN = "markdown"
+  JSON = "json"
+  MARKDOWN = "markdown"
 
 # Gestione delle variabili di istanza?
 class DoclingPDFLoader(BaseLoader):
