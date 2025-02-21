@@ -42,7 +42,7 @@ class Tokenizer:
       if markdown_chunking:
         split_docs = self._split_documents_from_markdown(name = doc, markdown = dict_docs[doc])
       else:
-        split_docs = [LangchainDocument(page_content = doc.page_content,metadata = {"name" : doc})]
+        split_docs = [LangchainDocument(page_content = dict_docs[doc], metadata = {"name" : doc})]
       tokenizer_docs = self.token_splitter.split_documents(split_docs)
       docs_processed.extend(tokenizer_docs)
     return docs_processed
