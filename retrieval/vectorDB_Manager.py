@@ -1,19 +1,29 @@
 import os
 
 from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores.utils import DistanceStrategy
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain.embeddings.openai import OpenAIEmbeddings
 
 from variables import Embedding_Model
 
 class VectorDB_Manager:
 
-  def __init__(self, embedder:Embedding_Model, docs=None, load_path=None):
-    self.embedding_model = HuggingFaceEmbeddings(
-      model_name = embedder.value,
-      multi_process = True,
-      model_kwargs = {"device": "cuda"},
-      encode_kwargs = {"normalize_embeddings": True},
+  def __init__(self, embedder:Embedding_Model, key_GPT = None, docs=None, load_path=None):
+    if embedder == Embedding_Model.GPT:
+      if key_GPT is None:
+        raise ValueError("To use an OpenAI embedder, a valid API key is required.")
+      else:
+        self.embedding_model = OpenAIEmbeddings(
+          model = Embedding_Model.GPT.value[0],
+          openai_api_key = key_GPT
+        )      
+    else:
+      self.embedding_model = HuggingFaceEmbeddings(
+        model_name = embedder.value[0],
+        multi_process = True,
+        model_kwargs = {"device": "cuda"},
+        encode_kwargs = {"normalize_embeddings": True},
       )
 
     if load_path:

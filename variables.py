@@ -8,10 +8,11 @@ REQUIREMENTS_PATH = "/content/Pipeline_RAG/requirements.txt"
 
 # Nome del modello usato per l'Embedding
 class Embedding_Model(Enum):
-  SEQ_128 = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2" 
-  SEQ_256 = "sentence-transformers/all-MiniLM-L6-v2"
-  SEQ_384 = "sentence-transformers/all-mpnet-base-v2"
-  SEQ_512 = "sentence-transformers/multi-qa-MiniLM-L6-cos-v1"
+  ST_128 = ("sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",128)
+  ST_256 = ("sentence-transformers/all-MiniLM-L6-v2", 256)
+  ST_384 = ("sentence-transformers/all-mpnet-base-v2", 384)
+  ST_512 = ("sentence-transformers/multi-qa-MiniLM-L6-cos-v1", 512)
+  GPT = ("text-embedding-ada-002", 8192)
 
 # Nome del modello per l'image captioning
 CAPTIONING_MODEL = "Salesforce/blip-image-captioning-base"
@@ -28,7 +29,9 @@ MARKDOWN_SEPARATORS = [
 
 # Definizione del template per il prompt italiano
 PROMT_TEMPLATE_ITA = """
-Rispondi alla domanda basandoti sulla tua conoscenza e sul seguente contesto.
+Sei un assistente virtuale che ha lo scopo di fornire per ognuno dei Document che trovi nel Contesto
+un riassunto del perché quel bando rispecchia le caratteristiche fornite dall'utente nella sezione
+Domanda. Inoltre, prima di ogni riassuto metti il nome del bando che trovi nei metadata. 
 
 Contesto:
 {context}

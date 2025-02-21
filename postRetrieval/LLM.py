@@ -49,7 +49,7 @@ class LLM:
     prompt = PromptTemplate(
       input_variables=["context", "question"],
       template = PROMT_TEMPLATE_ITA if lang=="it" else PROMT_TEMPLATE_ENG,
-      )   
+      ) 
     
     return prompt | llm | StrOutputParser()
  
