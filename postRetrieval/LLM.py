@@ -1,19 +1,13 @@
 from transformers import pipeline
 
-from langchain.prompts import PromptTemplate
 from langchain_huggingface import HuggingFacePipeline, HuggingFaceEndpoint
-from langchain_core.output_parsers import StrOutputParser
 from langchain_openai import ChatOpenAI
 
 from postRetrieval.loadModel import LoadModel
 
-from variables import PROMT_TEMPLATE_ITA
-from variables import PROMT_TEMPLATE_ENG
-
-# Gestione diversa per la costruzione del prompt?
 # Gestiore parametri diversi per LLM
 class LLM:
-  def __new__(cls, model_name = None, is_local = True, quantize = False, key_HF = None, key_GPT = None, lang = "en"):
+  def __new__(cls, model_name = None, is_local = True, quantize = False, key_HF = None, key_GPT = None):
     if not is_local and (key_HF is None and key_GPT is None):
       raise ValueError("To use a remote model, you must provide a valid key.")
     
@@ -48,13 +42,8 @@ class LLM:
         )
       else:
         llm = ChatOpenAI(model="gpt-3.5-turbo", openai_api_key=key_GPT)
-      
-    prompt = PromptTemplate(
-      input_variables=["context", "question"],
-      template = PROMT_TEMPLATE_ITA if lang=="it" else PROMT_TEMPLATE_ENG,
-      ) 
     
-    return prompt | llm | StrOutputParser()
+    return llm
  
 
 

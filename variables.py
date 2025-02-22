@@ -27,11 +27,34 @@ MARKDOWN_SEPARATORS = [
   ("###", "Titolo"),
 ]
 
-# Definizione del template per il prompt italiano
-PROMT_TEMPLATE_ITA = """
-Sei un assistente virtuale che ha lo scopo di fornire per ognuno dei Document che trovi nel Contesto
-un riassunto del perché quel bando rispecchia le caratteristiche fornite dall'utente nella sezione
-Domanda. Inoltre, prima di ogni riassuto metti il nome del bando che trovi nei metadata. 
+class Prompt_Template(Enum):
+  NO_CONTEXT = """
+Sei un assistente virtuale che ha lo scopo di rispondere in maniera semplice
+e chiara alla domanda che trovi qui sotto
+
+Domanda:
+{question}
+
+Risposta:
+"""
+  EXTENDED_CONTEXT = """
+Sei un assistente virtuale che ha lo scopo di fornire per tutti i Document che trovi
+nel Contesto un riassunto del perché quel bando rispecchia le caratteristiche fornite
+dall'utente che trovi nellasezione Domanda. Inoltre, prima di ogni riassuto metti il
+nome del bando a cui si riferisce. 
+
+Contesto:
+{context}
+
+Domanda:
+{question}
+
+Risposta:
+"""
+  REDUCED_CONTEXT ="""
+Sei un assistente virtuale che ha lo scopo di rispondere alla Domanda che ti viene posta
+basandoti sul Contesto fornito. Non è necesario che usi tutte le informazioni, ma solo
+quelle che ritieni importanti e pertiennti. 
 
 Contesto:
 {context}
@@ -42,15 +65,4 @@ Domanda:
 Risposta:
 """
 
-# Definizione del template per il prompt inglese
-PROMT_TEMPLATE_ENG ="""
-Answer the question based on your knowledge and the following context.
 
-Context:
-{context}
-
-Question:
-{question}
-
-Answer:
-"""
