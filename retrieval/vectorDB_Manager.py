@@ -1,4 +1,5 @@
 import os
+from typing import List
 
 from langchain_community.vectorstores import FAISS
 from langchain_community.vectorstores.utils import DistanceStrategy
@@ -9,7 +10,9 @@ from variables import Embedding_Model
 
 class VectorDB_Manager:
 
-  def __init__(self, embedder:Embedding_Model, key_GPT = None, docs=None, load_path=None):
+  def __init__(self, embedder:Embedding_Model, results=3, key_GPT=None, docs=None, load_path=None):
+
+    #---Embedder---
     if embedder == Embedding_Model.GPT:
       if key_GPT is None:
         raise ValueError("To use an OpenAI embedder, a valid API key is required.")
@@ -26,6 +29,7 @@ class VectorDB_Manager:
         encode_kwargs = {"normalize_embeddings": True},
       )
 
+    #---VectorDB---
     if load_path:
       self.vectorDB = self._load_vectorDB(load_path)
     elif docs:
@@ -36,9 +40,13 @@ class VectorDB_Manager:
         )
     else:
       raise ValueError("path or document needed for initialization")
-
-  def retrieval(self, results):
-    return self.vectorDB.as_retriever(search_type="similarity", search_kwargs={"k": results})
+    
+    #---Retrieval---
+    self.retrieval = self.vectorDB.as_retriever(search_type="similarity", search_kwargs={"k": results})
+  
+  def get_similar_documents(self, query:str) -> List[str]:
+    similar_docs = self.retrieval.invoke(query)
+    return [doc.metadata["name"] for doc in similar_docs]
 
   def add_docs(self, new_docs):
     self.vectorDB.add_documents(new_docs)
