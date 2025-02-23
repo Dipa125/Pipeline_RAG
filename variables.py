@@ -37,11 +37,11 @@ Domanda:
 
 Risposta:
 """
-  EXTENDED_CONTEXT = """
-Sei un assistente virtuale che ha lo scopo di fornire per tutti i Document che trovi
-nel Contesto un riassunto del perché quel bando rispecchia le caratteristiche fornite
-dall'utente che trovi nellasezione Domanda. Inoltre, prima di ogni riassuto metti il
-nome del bando a cui si riferisce. 
+  DOCUMENT_CONTEXT = """
+Sei un assistente virtuale che ha lo scopo di fornire, tra tutti i Document che trovi
+nel Contesto, un riassunto del perché il bando rispecchia le caratteristiche fornite
+dall'utente che trovi nella sezione Domanda. Inoltre, prima del riassuto metti il
+nome del bando che hai scelto come il più pertinente.
 
 Contesto:
 {context}
@@ -51,13 +51,11 @@ Domanda:
 
 Risposta:
 """
-  REDUCED_CONTEXT ="""
-Sei un assistente virtuale che ha lo scopo di rispondere alla Domanda che ti viene posta
-basandoti sul Contesto fornito. Non è necesario che usi tutte le informazioni, ma solo
-quelle che ritieni importanti e pertiennti. 
-
-Contesto:
-{context}
+  CHAT_CONTEXT ="""
+Sei un assistente virtuale impiegato in una chat in cui devi aiutare l'utente ad
+estrarre informazioni utili da dei bandi pubblici. Ti verrà fornita la memoria della
+conversazione e dei documetni da usare come contesto. Rispondi alla Domanda in maniera
+corretta secondo le infoamzioni fornite.
 
 Domanda:
 {question}
