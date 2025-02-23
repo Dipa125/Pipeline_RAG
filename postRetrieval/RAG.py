@@ -1,17 +1,15 @@
 from langchain_core.runnables import RunnablePassthrough
+from langchain.schema.runnable import RunnableLambda
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
-from langchain.chains import RetrievalQA
 from langchain.memory import ConversationBufferMemory
 
 from variables import Prompt_Template
 
-# Rivedere i prompt
 class RAG_Builder:
   def __init__(self, llm, retrieval):
     self.llm = llm
     self.retrieval = retrieval
-    print("Versione 5")
 
   #---NO CONTEXT---
   def build_RAG_without_context(self):
@@ -34,31 +32,69 @@ class RAG_Builder:
 
   #---MEMORY---
   def build_RAG_with_chat(self):
-    memory = ConversationBufferMemory(
-        memory_key="chat_history",
-        return_messages=True,
-        input_key="query",
-        output_key="answer"
+
+    class Chat:
+      def __init__(self, retrieval, llm):
+        
+        self.memory = ConversationBufferMemory(
+          memory_key="chat_history",
+          return_messages=True,
+          input_key="question",
+          output_key="answer"
+        )
+        self.prompt = PromptTemplate(
+          input_variables=["chat_history","context", "question"],
+          template=Prompt_Template.CHAT_CONTEXT.value,
+        )
+        self.retrieval = retrieval
+        self.llm = llm
+
+        self.chain = {
+          "chat_history": self.memory.load_memory_variables,
+          "context": self.retrieval,
+          "question": RunnablePassthrough()
+        } | self.prompt | self.llm | StrOutputParser()
+
+      def chat(self, query:str):
+        response = self.chain.invoke(query)
+        self.memory.save_context({"question": query}, {"answer": response})
+        return response
+
+    return Chat(
+      retrieval=self.retrieval,
+      llm=self.llm
     )
 
-    prompt = PromptTemplate(
-      input_variables=["chat_history","context", "question"],
-      template=Prompt_Template.CHAT_CONTEXT.value,
-    )
 
-    print_promt = {
-      "chat_history": memory.load_memory_variables,
-      "context": self.retrieval,
-      "question": RunnablePassthrough()
-    } | prompt
+    # self.memory = ConversationBufferMemory(
+    #     memory_key="chat_history",
+    #     return_messages=True,
+    #     input_key="question",
+    #     output_key="answer"
+    # )
 
-    print(print_promt)
+    # prompt = PromptTemplate(
+    #   input_variables=["chat_history","context", "question"],
+    #   template=Prompt_Template.CHAT_CONTEXT.value,
+    # )
 
-    return {
-      "chat_history": memory.load_memory_variables,
-      "context": self.retrieval,
-      "question": RunnablePassthrough()
-    } | prompt | self.llm | StrOutputParser()
+    # def save_to_memory(inputs_and_outputs):
+    #   query = inputs_and_outputs["question"]
+    #   print("Query ->",query)
+    #   response = inputs_and_outputs["answer"]
+    #   print("Response ->",response)
+    #   self.memory.save_context({"query": query}, {"answer": response})
+    #   return response
+
+    # # def save_to_memory(inputs, outputs):
+    # #   self.memory.save_context({"query": inputs["question"]}, {"answer": outputs})
+    # #   return outputs
+
+    # return {
+    #   "chat_history": self.memory.load_memory_variables,
+    #   "context": self.retrieval,
+    #   "question": RunnablePassthrough()
+    # } | prompt | self.llm | StrOutputParser() | RunnableLambda(save_to_memory)
 
 
   

@@ -7,7 +7,7 @@ from postRetrieval.loadModel import LoadModel
 
 # Gestiore parametri diversi per LLM
 class LLM:
-  def __new__(cls, model_name = None, is_local = True, quantize = False, key_HF = None, key_GPT = None):
+  def __new__(cls, model_name = None, is_local = True, quantize = False, key_HF = None, key_GPT = None, return_prompt=False):
     if not is_local and (key_HF is None and key_GPT is None):
       raise ValueError("To use a remote model, you must provide a valid key.")
     
@@ -20,10 +20,10 @@ class LLM:
         model=model,
         tokenizer=tokenizer,
         task="text-generation",
+        return_full_text=return_prompt,
         temperature=0.2,
         do_sample=True,
         repetition_penalty=1.1,
-        return_full_text=True,
         max_new_tokens=300,
         pad_token_id=tokenizer.eos_token_id
       )
@@ -32,16 +32,19 @@ class LLM:
       if key_HF is not None:
         llm = HuggingFaceEndpoint(
           task="text-generation",
+          return_full_text=return_prompt,
           repo_id = model_name,
           huggingfacehub_api_token = key_HF,
           temperature=0.2,
           do_sample=True,
           repetition_penalty=1.1,
-          return_full_text=True,
           max_new_tokens=300,
         )
       else:
-        llm = ChatOpenAI(model="gpt-3.5-turbo", openai_api_key=key_GPT)
+        llm = ChatOpenAI(
+          model="gpt-3.5-turbo",
+          openai_api_key = key_GPT,
+          verbose=return_prompt)
     
     return llm
  
