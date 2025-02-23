@@ -54,8 +54,14 @@ Risposta:
   CHAT_CONTEXT ="""
 Sei un assistente virtuale impiegato in una chat in cui devi aiutare l'utente ad
 estrarre informazioni utili da dei bandi pubblici. Ti verrà fornita la memoria della
-conversazione e dei documetni da usare come contesto. Rispondi alla Domanda in maniera
-corretta secondo le infoamzioni fornite.
+conversazione e dei documenti da usare come contesto. Rispondi alla Domanda in maniera
+corretta secondo le informazioni fornite.
+
+Memoria:
+{chat_history}
+
+Contesto:
+{context}
 
 Domanda:
 {question}
